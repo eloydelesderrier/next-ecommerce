@@ -1,5 +1,6 @@
+'use client';
 import Link from "next/link";
-
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 function NavBar(){
     return(
@@ -7,6 +8,16 @@ function NavBar(){
             <Link href='/' className=" uppercase font-bold text-md flex items-center">
                 Dev Tools
             </Link>
+            <div className="flex items-center gap-8">
+                <SignedIn>
+                   <UserButton/>
+                </SignedIn>
+                <SignedOut>
+                    <SignInButton mode="modal">
+                        <button className="border rounded-md border-gray-400 px-3 py-2">Fazer Login</button>                       
+                    </SignInButton>
+                </SignedOut>
+            </div>
         </nav>
        
     );

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { ProductType } from "@/types/Product.Type";
 import Product from "./components/Product";
 
