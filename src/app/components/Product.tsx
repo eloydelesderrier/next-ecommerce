@@ -1,6 +1,7 @@
 import { ProductType } from "@/types/Product.Type";
-import Image from "next/image";
 import ProductImage from "./ProductImage";
+import { formatPrice } from "@/lib/utils";
+
 
 type ProductProps = {
     product:ProductType
@@ -16,11 +17,11 @@ export default function Product({product}:ProductProps) {
             </div>
             <div className="flex justify-between font-bols my-3">
                 <p className="w-40 truncate">
-                    {product.title}
+                    {product.name}
                 </p> 
                 
                 <p className="text-md text-teal-400">
-                    ${product.price}
+                    ${formatPrice(product.price)}
                 </p> 
             </div>
             <button className="roundend-md bg-teal-600 text-white p-3.5 py-2.5 text-sm text-center">Adicionar ao Carrinho</button>
