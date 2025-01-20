@@ -1,7 +1,8 @@
 import { ProductType } from "@/types/Product.Type";
 import ProductImage from "./ProductImage";
 import { formatPrice } from "@/lib/utils";
-
+import AddCart from './AddCart'
+import Link from "next/link";
 
 type ProductProps = {
     product:ProductType
@@ -10,6 +11,9 @@ type ProductProps = {
 export default function Product({product}:ProductProps) {
 
     return(
+        <>
+        <Link href={`/product/${product.id}`}>
+        
         <div className="flex flex-col shadow-lg h-96 bg-gray-950 p-5 text-gray-400">
             <div className="relative max-h-72 flex-1">
                 <ProductImage product={product} fill
@@ -21,10 +25,14 @@ export default function Product({product}:ProductProps) {
                 </p> 
                 
                 <p className="text-md text-teal-400">
-                    ${formatPrice(product.price)}
+                    {formatPrice(product.price)}
                 </p> 
             </div>
-            <button className="roundend-md bg-teal-600 text-white p-3.5 py-2.5 text-sm text-center">Adicionar ao Carrinho</button>
+            <AddCart product={product}/>
+           
         </div>
+        </Link>
+        </>
+        
     )
 }

@@ -4,8 +4,8 @@ import { ProductType } from './types/Product.Type'
 
 type CartState = {
     cart: ProductType[];
-    // addToCart: (product: ProductType)=>void
-    // removeFromCar: (product: ProductType)=>void;
+    addProduct: (product: ProductType)=>void
+    // removeProduct: (product: ProductType)=>void;
     isOpen: boolean;
     toggleCart: ()=>void;
 };
@@ -14,9 +14,23 @@ export const useCartStore = create<CartState>()(
     persist(
       (set) => ({
         cart: [],
-        isOpen: false,
-        toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
-        // addToCart: (product) => set((state) => ({ cart: [...state.cart, product] })),
+        addProduct: (item) => 
+          set((state) => {
+            const product = state.cart.find((p)=> p.id === item.id);
+            if (product) {
+              const updatedCart = state.cart.map((p)=> {
+                if (p.id === item.id){
+                  return {...p, quantity: p.quantity ? p.quantity + 1 : 1};
+                }
+                return p;
+              })
+              return {cart : updatedCart};
+            }else{
+              return {cart: [...state.cart, {...item, quantity: 1}]}
+            }
+          }),
+          isOpen: false,
+          toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
         // removeFromCart: (product) => set((state) => ({
         //   cart: state.cart.filter((item) => item.id !== product.id),
         // })),
