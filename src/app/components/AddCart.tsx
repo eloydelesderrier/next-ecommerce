@@ -1,5 +1,5 @@
 'use client';
-import { useCartStore } from "@/store";
+import { useCartStore } from "@/types/store";
 import { ProductType } from "@/types/Product.Type";
 
 

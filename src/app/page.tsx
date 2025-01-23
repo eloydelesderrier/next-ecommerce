@@ -15,7 +15,7 @@ async function getProducts(): Promise<ProductType[]>{
         product:product.id,
       });
       return{
-        id: (product.id),
+        id: product.id,
         price: price.data[0].unit_amount,
         name: product.name,
         image: product.images[0],
