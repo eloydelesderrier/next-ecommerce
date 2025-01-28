@@ -4,10 +4,14 @@ import { useCartStore } from "@/types/store"
 import Image from 'next/image'
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import { IoAddCircleOutline } from "react-icons/io5";
-
+import CheckoutButton from "./CheckoutButton";
+import Checkout from "./Checkout";
 
 export default function CartDrawer() {
     const useStore = useCartStore();
+    const totalPrice = useStore.cart.reduce((total, item)=> {
+      return total + item.price! * item.quantity!;
+    },0)
     return (
       <>
         <div onClick={() => useStore.toggleCart()} className="fixed w-full h-screen bg-black/25 left-0 top-0 z-50">
@@ -16,7 +20,11 @@ export default function CartDrawer() {
               Voltar Para Loja
             </button>
             <div className="border-t border-gray-300 my-5"></div>
-            {useStore.cart.map((item) => (
+           
+            {
+              useStore.onCheckout ==='cart' && (
+                <>
+                {useStore.cart.map((item) => (
               <div key={item.id} className="flex items-center gap-4 mb-4">
                 <Image
                   src={item.image}
@@ -34,6 +42,19 @@ export default function CartDrawer() {
                 </div>
               </div>
             ))}
+                </>
+            )}
+
+            {
+              useStore.cart.length > 0 && useStore.onCheckout === 'cart' && (
+                <CheckoutButton totalPrice={totalPrice}/>
+              )
+            }
+            {
+              useStore.onCheckout === 'checkout' && (
+                <Checkout/>
+              )
+            }
           </div>
         </div>
       </>

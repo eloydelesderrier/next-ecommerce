@@ -38,7 +38,7 @@ export default async function ProductPage({ params: { id } }: ProductPageprops) 
                 <h2 className=" text-xl text-teal-600">{formatPrice(product.price)}</h2>
             </div>
         </div>
-        <div className="pb-4">
+        <div className="pb-4 ">
             <p className="text-sm">{product.description}</p>
         </div>
         <AddCart product={product}/>
