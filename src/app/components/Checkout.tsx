@@ -12,10 +12,16 @@ export default function Checkout(){
             body: JSON.stringify({
                 items: carStore.cart, 
                 payment_inten_id: carStore.paymentIntent,
-            })
+            }),
+            
         })
+        .then((res)=> {return res.json()}).then((data)=>{
+            console.log(data.paymentIntent);
+        });
+       
     },[carStore.cart, carStore.paymentIntent]);
     return(
+
         <div>
             <h1>Checkout</h1>
         </div>

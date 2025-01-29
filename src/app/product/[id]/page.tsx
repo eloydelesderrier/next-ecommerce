@@ -1,18 +1,19 @@
 import AddCart from "@/app/components/AddCart";
 import ProductImage from "@/app/components/ProductImage";
 import { formatPrice } from "@/lib/utils";
-import Stripe from "stripe";
+import {stripe} from "@/lib/stripe";
+import { useParams } from 'react-router-dom';
+import { cookies } from "next/headers";
 
-type ProductPageprops = {
+
+type ProductPageProps = {
     params : {
         id: string;
     }
 }
 
 async function getProduct(id: string){
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-        apiVersion: '2024-12-18.acacia',
-    });
+   
     const produto = await stripe.products.retrieve(id);
     const price = await stripe.prices.list({
         product: produto.id,
@@ -27,10 +28,12 @@ async function getProduct(id: string){
       };
 
 }
-export default async function ProductPage({ params: { id } }: ProductPageprops) {
+export default async function ProductPage({ params}: ProductPageProps) {
+    const {id} = await params
     const product = await getProduct(id);
     return (
-      <div className=" flex flex-col md:flex-row items-center max-w-7xl mx-auto gap-8 p-10">
+        <>
+        <div className=" flex flex-col md:flex-auto items-center max-w-7xl mx-auto gap-8 p-8">
         <ProductImage product={product} />
         <div  className="flex flex-col">
             <div className="pb-4">
@@ -43,5 +46,7 @@ export default async function ProductPage({ params: { id } }: ProductPageprops) 
         </div>
         <AddCart product={product}/>
       </div>
+        </>
+     
     );
   }
